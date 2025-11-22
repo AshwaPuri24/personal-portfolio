@@ -13,24 +13,33 @@ export default function Contact() {
     e.preventDefault();
     setStatus({ type: "loading", message: "TRANSMITTING DATA..." });
 
-    // Replace these with your actual EmailJS keys when ready
-    emailjs
-      .sendForm(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
-        formRef.current,
-        "YOUR_PUBLIC_KEY"
-      )
-      .then(
-        (result) => {
-          setStatus({ type: "success", message: "TRANSMISSION SUCCESSFUL" });
-          formRef.current.reset();
-          setTimeout(() => setStatus({ type: "", message: "" }), 5000);
-        },
-        (error) => {
-          setStatus({ type: "error", message: "TRANSMISSION FAILED. RETRY." });
-        }
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      setStatus({
+        type: "error",
+        message: "CONFIGURATION ERROR: MISSING KEYS",
+      });
+      console.error(
+        "Missing EmailJS environment variables. Check your .env file."
       );
+      return;
+    }
+
+    emailjs.sendForm(serviceId, templateId, formRef.current, publicKey).then(
+      (result) => {
+        setStatus({ type: "success", message: "TRANSMISSION SUCCESSFUL" });
+        formRef.current.reset();
+        // Clear success message after 5 seconds
+        setTimeout(() => setStatus({ type: "", message: "" }), 5000);
+      },
+      (error) => {
+        setStatus({ type: "error", message: "TRANSMISSION FAILED. RETRY." });
+        console.error("EmailJS Error:", error);
+      }
+    );
   };
 
   return (

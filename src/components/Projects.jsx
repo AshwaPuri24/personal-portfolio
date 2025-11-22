@@ -50,7 +50,7 @@ export default function Projects() {
                   <div className="project-card">
                     <div className="project-image">
                       <img
-                        src={project.image || "/assets/recipe-gen.jpg"}
+                        src={project.image || "/assets/project.jpg"}
                         alt={project.title}
                       />
                       <div className="project-links">

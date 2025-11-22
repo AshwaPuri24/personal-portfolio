@@ -55,7 +55,7 @@ export default function Hero() {
               alt="Ashwani Kumar Puri"
               className="profile-image"
             />
-            <div className="image-border"></div> {/* The rotating ring */}
+            <div className="image-border"></div>
           </div>
         </div>
       </div>

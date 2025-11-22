@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { db } from "../firebase"; // Import your firebase config
+import { Link } from "react-router-dom"; // Use React Router Link
 import { FaExternalLinkAlt } from "react-icons/fa";
 import AnimatedSection from "./AnimatedSection";
 import "../Styles/Blog.css";
@@ -8,18 +11,23 @@ export default function Blog() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch from Dev.to (using a default tag 'java' if you don't have posts yet)
-    // Once you have Dev.to posts, switch 'tag=java' to 'username=yourusername'
-    fetch("https://dev.to/api/articles?tag=java&per_page=3")
-      .then((res) => res.json())
-      .then((data) => {
-        setPosts(data);
+    const fetchPosts = async () => {
+      try {
+        const q = query(collection(db, "blogs"), orderBy("createdAt", "desc"));
+        const querySnapshot = await getDocs(q);
+        const blogData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setPosts(blogData);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      } finally {
         setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
+      }
+    };
+
+    fetchPosts();
   }, []);
 
   return (
@@ -28,13 +36,13 @@ export default function Blog() {
         <div className="section-header">
           <h2 className="section-title">Captain's Log</h2>
           <div className="section-divider"></div>
-          <p className="section-subtitle">:: INCOMING TRANSMISSIONS ::</p>
+          <p className="section-subtitle">:: INTERNAL DATABASE ::</p>
         </div>
 
         <div className="blog-grid">
           {loading ? (
             <p style={{ textAlign: "center", color: "var(--accent-cyan)" }}>
-              Loading Data Stream...
+              Decrypting Archives...
             </p>
           ) : (
             posts.map((post, index) => (
@@ -45,18 +53,19 @@ export default function Blog() {
               >
                 <div className="blog-card">
                   <span className="blog-date">
-                    LOG DATE: {new Date(post.published_at).toLocaleDateString()}
+                    LOG DATE:{" "}
+                    {post.createdAt
+                      ? new Date(
+                          post.createdAt.seconds * 1000
+                        ).toLocaleDateString()
+                      : "Unknown"}
                   </span>
                   <h3 className="blog-title">{post.title}</h3>
-                  <p className="blog-desc">{post.description}</p>
-                  <a
-                    href={post.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="read-link"
-                  >
-                    Decrypt Data <FaExternalLinkAlt />
-                  </a>
+                  <p className="blog-desc">{post.desc}</p>
+                  {/* Link to internal route instead of external URL */}
+                  <Link to={`/blog/${post.id}`} className="read-link">
+                    Access File <FaExternalLinkAlt />
+                  </Link>
                 </div>
               </AnimatedSection>
             ))

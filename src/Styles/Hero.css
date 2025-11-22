@@ -5,8 +5,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  padding-top: 80px; /* Compensate for HUD */
-  /* Transparent background to show stars */
+  padding-top: 80px;
   background: transparent;
 }
 

@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import "./Styles/App.css";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -12,20 +17,32 @@ import BlogPost from "./components/BlogPost";
 import AdminDashboard from "./components/AdminDashboard";
 import StarBackground from "./components/StarBackground";
 import { Analytics } from "@vercel/analytics/react";
+import SocialSidebar from "./components/SocialSidebar";
 
-// Create a Home component for the single-page sections
+const Layout = ({ children }) => {
+  const location = useLocation();
+  const isAdmin = location.pathname === "/admin";
+
+  return (
+    <>
+      {!isAdmin && <Navbar />}
+      {!isAdmin && <SocialSidebar />}
+      <main className="app-content" style={{ position: "relative", zIndex: 1 }}>
+        {children}
+      </main>
+      {!isAdmin && <Footer />}
+    </>
+  );
+};
+
 const Home = () => (
   <>
-    <Navbar />
-    <main className="app-content" style={{ position: "relative", zIndex: 1 }}>
-      <Hero />
-      <About />
-      <Skills />
-      <Projects />
-      <Blog />
-      <Contact />
-    </main>
-    <Footer />
+    <Hero />
+    <About />
+    <Skills />
+    <Projects />
+    <Blog />
+    <Contact />
   </>
 );
 
@@ -34,14 +51,13 @@ function App() {
     <Router>
       <div className="app">
         <StarBackground />
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/blog/:id" element={<BlogPost />} />
-
-          {/* Admin Route */}
-          <Route path="/admin" element={<AdminDashboard />} />
-        </Routes>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/blog/:id" element={<BlogPost />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+          </Routes>
+        </Layout>
         <Analytics />
       </div>
     </Router>

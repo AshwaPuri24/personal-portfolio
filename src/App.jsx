@@ -12,13 +12,11 @@ import BlogPost from "./components/BlogPost";
 import AdminDashboard from "./components/AdminDashboard";
 import StarBackground from "./components/StarBackground";
 import { Analytics } from "@vercel/analytics/react";
-import SocialSidebar from "./components/SocialSidebar";
 
 // Create a Home component for the single-page sections
 const Home = () => (
   <>
     <Navbar />
-    <SocialSidebar />
     <main className="app-content" style={{ position: "relative", zIndex: 1 }}>
       <Hero />
       <About />

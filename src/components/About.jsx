@@ -7,7 +7,7 @@ export default function About() {
     <section id="about" className="about-section">
       <div className="container">
         <div className="section-header">
-          <h2 className="section-title">Crew Profile</h2>
+          <h2 className="section-title">Captain's Profile</h2>
           <div className="section-divider"></div>
           <p className="section-subtitle">:: BIOMETRIC DATA LOADED ::</p>
         </div>

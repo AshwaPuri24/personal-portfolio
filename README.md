@@ -9,7 +9,7 @@ Welcome to **Mission Control**. This is a revamped, high-fidelity personal portf
 - **👨‍🚀 Zero-G Hero Section:** Features a floating avatar with orbital rings and terminal-style typing effects.
 - **🔮 Holographic Deck (Projects):** Project cards featuring 3D tilt effects (`react-parallax-tilt`) that respond to mouse movement.
 - **📊 System Diagnostics (Skills):** Skills displayed as "Energy Levels" with neon scan-line animations.
-- **📜 Captain's Log (Blog):** Dynamic integration with the Dev.to API to fetch and display real technical articles.
+- **📜 Captain's Log (Blog):** Custom CMS powered by Firebase Firestore to manage and display technical articles.
 - **📡 Subspace Link (Contact):** A secure, terminal-styled contact form powered by **EmailJS** (hides personal contact info).
 - **✨ Warp Speed Animations:** Smooth scroll reveal animations powered by **Framer Motion**.
 
@@ -19,7 +19,7 @@ Welcome to **Mission Control**. This is a revamped, high-fidelity personal portf
 - **Styling:** CSS3 (Custom Properties, Glassmorphism, Animations)
 - **Animation:** Framer Motion, React Type Animation
 - **Interactivity:** React Parallax Tilt
-- **Backend Services:** EmailJS (Contact Form), Dev.to API (Blog)
+- **Backend Services:** Backend Services: Firebase Firestore (Content Management), Firebase Auth (Admin Access), EmailJS (Contact Form).
 - **Icons:** React Icons (Font Awesome, Simple Icons)
 
 ## ⚙️ Getting Started
@@ -33,23 +33,23 @@ Welcome to **Mission Control**. This is a revamped, high-fidelity personal portf
 
 1. **Clone the repository:**
 
-    ```bash
-    git clone [https://github.com/AshwaPuri24/personal-portfolio.git](https://github.com/AshwaPuri24/personal-portfolio.git)
-    cd personal-portfolio
-    ```
+   ```bash
+   git clone [https://github.com/AshwaPuri24/personal-portfolio.git](https://github.com/AshwaPuri24/personal-portfolio.git)
+   cd personal-portfolio
+   ```
 
 2. **Install dependencies:**
-    *Note: Use `--legacy-peer-deps` due to React 19 compatibility with some animation libraries.*
+   _Note: Use `--legacy-peer-deps` due to React 19 compatibility with some animation libraries._
 
-    ```bash
-    npm install --legacy-peer-deps
-    ```
+   ```bash
+   npm install --legacy-peer-deps
+   ```
 
 3. **Start the development server:**
 
-    ```bash
-    npm run dev
-    ```
+   ```bash
+   npm run dev
+   ```
 
 4. Visit `http://localhost:5173` to view the mission control center.
 
@@ -64,14 +64,14 @@ To make the contact form functional, you need to create an account at [EmailJS](
 3. Get your **Public Key**.
 4. Open `src/components/Contact.jsx` and replace the placeholders:
 
-    ```javascript
-    emailjs.sendForm(
-      'YOUR_SERVICE_ID',
-      'YOUR_TEMPLATE_ID',
-      formRef.current,
-      'YOUR_PUBLIC_KEY'
-    )
-    ```
+   ```javascript
+   emailjs.sendForm(
+     "YOUR_SERVICE_ID",
+     "YOUR_TEMPLATE_ID",
+     formRef.current,
+     "YOUR_PUBLIC_KEY"
+   );
+   ```
 
 ### 2. Setup Blog Feed
 
@@ -80,10 +80,12 @@ To fetch your own articles:
 1. Open `src/components/Blog.jsx`.
 2. Update the fetch URL with your Dev.to username:
 
-    ```javascript
-    // Replace 'yourusername' with your actual Dev.to handle
-    fetch("[https://dev.to/api/articles?username=yourusername&per_page=3](https://dev.to/api/articles?username=yourusername&per_page=3)")
-    ```
+   ```javascript
+   // Replace 'yourusername' with your actual Dev.to handle
+   fetch(
+     "[https://dev.to/api/articles?username=yourusername&per_page=3](https://dev.to/api/articles?username=yourusername&per_page=3)"
+   );
+   ```
 
 ## 📂 Project Structure
 
@@ -105,3 +107,4 @@ src/
 │   └── ...
 ├── App.jsx
 └── main.jsx
+```

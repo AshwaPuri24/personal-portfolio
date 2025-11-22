@@ -24,7 +24,7 @@ export default function Hero() {
                 ]}
                 wrapper="span"
                 speed={50}
-                style={{ fontFamily: "monospace" }} // Monospace for terminal look
+                style={{ fontFamily: "monospace" }}
                 repeat={Infinity}
               />
             </div>
@@ -51,7 +51,7 @@ export default function Hero() {
         <div className="hero-image">
           <div className="profile-image-wrapper">
             <img
-              src="assets/profile-photo.png"
+              src="/assets/profile-photo.png"
               alt="Ashwani Kumar Puri"
               className="profile-image"
             />

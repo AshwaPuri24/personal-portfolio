@@ -1,32 +1,31 @@
-//
+import { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import Tilt from "react-parallax-tilt";
 import AnimatedSection from "./AnimatedSection";
 import "../Styles/Projects.css";
 
-// Manually defining data here to ensure it matches the space theme immediately
-const projectsData = [
-  {
-    title: "AI Recipe Core",
-    description:
-      "Neural network integration for culinary synthesis. Analyzes ingredient availability to generate optimal nutritional instructions.",
-    technologies: ["React", "Spring Boot", "PostgreSQL", "AI API"],
-    image: "/assets/recipe-gen.jpg", // Ensure you have this image or a placeholder
-    githubLink: "https://github.com/AshwaPuri24",
-    liveLink: "#",
-  },
-  {
-    title: "Habit Tracker v2",
-    description:
-      "Behavioral analysis module. Tracks user efficiency patterns and optimizes daily routine algorithms.",
-    technologies: ["React", "Java", "MySQL", "JWT"],
-    image: "/assets/habit-tracker.jpg",
-    githubLink: "https://github.com/AshwaPuri24",
-    liveLink: "#",
-  },
-];
-
 export default function Projects() {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "projects"));
+        const data = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setProjects(data);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
   return (
     <section id="projects" className="projects-section">
       <div className="container">
@@ -38,8 +37,8 @@ export default function Projects() {
 
         <div className="projects-container">
           <div className="projects-scroller">
-            {projectsData.map((project, index) => (
-              <AnimatedSection key={index} delay={index * 0.2}>
+            {projects.map((project, index) => (
+              <AnimatedSection key={project.id} delay={index * 0.2}>
                 <Tilt
                   className="Tilt"
                   perspective={1000}
@@ -50,17 +49,20 @@ export default function Projects() {
                 >
                   <div className="project-card">
                     <div className="project-image">
-                      <img src={project.image} alt={project.title} />
+                      <img
+                        src={project.image || "/assets/recipe-gen.jpg"}
+                        alt={project.title}
+                      />
                       <div className="project-links">
                         <a
-                          href={project.githubLink}
+                          href={project.github || project.githubLink}
                           target="_blank"
                           rel="noreferrer"
                         >
                           <FaGithub className="project-icon" />
                         </a>
                         <a
-                          href={project.liveLink}
+                          href={project.link || project.liveLink}
                           target="_blank"
                           rel="noreferrer"
                         >
@@ -70,11 +72,14 @@ export default function Projects() {
                     </div>
                     <div className="project-content">
                       <h3>{project.title}</h3>
-                      <p>{project.description}</p>
+                      <p>{project.desc || project.description}</p>
                       <div className="project-technologies">
-                        {project.technologies.map((tech, i) => (
+                        {(typeof project.tech === "string"
+                          ? project.tech.split(",")
+                          : project.technologies || []
+                        ).map((tech, i) => (
                           <span key={i} className="tech-tag">
-                            [{tech}]
+                            [{tech.trim()}]
                           </span>
                         ))}
                       </div>

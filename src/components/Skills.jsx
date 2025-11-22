@@ -1,4 +1,13 @@
-import { FaReact, FaJava, FaDatabase, FaCodeBranch } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
+import {
+  FaReact,
+  FaJava,
+  FaDatabase,
+  FaCodeBranch,
+  FaLaptopCode,
+} from "react-icons/fa";
 import {
   SiJavascript,
   SiHtml5,
@@ -8,19 +17,42 @@ import {
 } from "react-icons/si";
 import "../Styles/Skills.css";
 
-const skillsData = [
-  { icon: <FaReact />, name: "React.js", level: "90%" },
-  { icon: <SiJavascript />, name: "JavaScript", level: "85%" },
-  { icon: <FaJava />, name: "Java", level: "80%" },
-  { icon: <SiSpringboot />, name: "Spring Boot", level: "80%" },
-  { icon: <SiHtml5 />, name: "HTML5", level: "95%" },
-  { icon: <SiCss3 />, name: "CSS3", level: "90%" },
-  { icon: <FaDatabase />, name: "SQL / DB", level: "85%" },
-  { icon: <SiGit />, name: "Git Control", level: "85%" },
-  { icon: <FaCodeBranch />, name: "REST APIs", level: "80%" },
-];
+// Helper to map database names to icons
+const getIcon = (name) => {
+  // Fixed typo here: removed "CX"
+  const lowerName = name.toLowerCase();
+  if (lowerName.includes("react")) return <FaReact />;
+  if (lowerName.includes("java") && !lowerName.includes("script"))
+    return <FaJava />;
+  if (lowerName.includes("script")) return <SiJavascript />;
+  if (lowerName.includes("spring")) return <SiSpringboot />;
+  if (lowerName.includes("html")) return <SiHtml5 />;
+  if (lowerName.includes("css")) return <SiCss3 />;
+  if (lowerName.includes("sql") || lowerName.includes("data"))
+    return <FaDatabase />;
+  if (lowerName.includes("git")) return <SiGit />;
+  return <FaLaptopCode />; // Default icon
+};
 
 export default function Skills() {
+  const [skills, setSkills] = useState([]);
+
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "skills"));
+        const data = querySnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setSkills(data);
+      } catch (error) {
+        console.error("Error fetching skills:", error);
+      }
+    };
+    fetchSkills();
+  }, []);
+
   return (
     <section id="skills" className="skills-section">
       <div className="container">
@@ -31,11 +63,11 @@ export default function Skills() {
         </div>
 
         <div className="skills-grid">
-          {skillsData.map((skill, index) => (
+          {skills.map((skill, index) => (
             <div key={index} className="skill-card-tech">
               <div className="tech-header">
                 <h3 className="tech-name">{skill.name}</h3>
-                <div className="tech-icon">{skill.icon}</div>
+                <div className="tech-icon">{getIcon(skill.name || "")}</div>
               </div>
 
               <div className="energy-bar-container">

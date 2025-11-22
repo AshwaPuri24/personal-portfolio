@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
-import { db } from "../firebase"; // Import your firebase config
-import { Link } from "react-router-dom"; // Use React Router Link
+import { db } from "../firebase";
+import { Link } from "react-router-dom";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import AnimatedSection from "./AnimatedSection";
 import "../Styles/Blog.css";

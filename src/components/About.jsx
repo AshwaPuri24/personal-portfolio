@@ -25,6 +25,7 @@ export default function About() {
             </p>
             <p className="about-description">
               My journey in the tech cosmos began with a Bachelor's in Computer
+              Applications. Currently pursuing Master's in Computer
               Applications. I specialize in navigating complex backend systems
               and constructing high-performance frontend interfaces. I approach
               every mission with laser focus on clean, maintainable code.
@@ -40,7 +41,7 @@ export default function About() {
                 <span className="stat-label">Efficiency</span>
               </div>
               <div className="stat-item">
-                <span className="stat-number">24/7</span>
+                <span className="stat-number">24 / 7</span>
                 <span className="stat-label">Online</span>
               </div>
             </div>

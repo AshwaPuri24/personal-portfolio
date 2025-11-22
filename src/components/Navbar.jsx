@@ -20,9 +20,9 @@ export default function Navbar() {
       <div className="nav-container">
         <a href="#hero" className="logo">
           A.PURI{" "}
-          <span style={{ fontSize: "0.5em", verticalAlign: "super" }}>
+          {/* <span style={{ fontSize: "0.5em", verticalAlign: "super" }}>
             v2.0
-          </span>
+          </span> */}
         </a>
 
         <div className={`nav-links ${isMenuOpen ? "active" : ""}`}>

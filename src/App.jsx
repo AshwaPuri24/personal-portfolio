@@ -17,7 +17,6 @@ import BlogPost from "./components/BlogPost";
 import AdminDashboard from "./components/AdminDashboard";
 import StarBackground from "./components/StarBackground";
 import { Analytics } from "@vercel/analytics/react";
-import SocialSidebar from "./components/SocialSidebar";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -26,7 +25,6 @@ const Layout = ({ children }) => {
   return (
     <>
       {!isAdmin && <Navbar />}
-      {!isAdmin && <SocialSidebar />}
       <main className="app-content" style={{ position: "relative", zIndex: 1 }}>
         {children}
       </main>

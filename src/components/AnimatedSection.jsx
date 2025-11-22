@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+/* eslint-disable no-unused-vars */
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 export default function AnimatedSection({
@@ -32,7 +32,7 @@ export default function AnimatedSection({
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={variants}
-      style={{ width: "100%" }} // Ensure it doesn't collapse
+      style={{ width: "100%" }}
     >
       {children}
     </motion.div>

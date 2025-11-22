@@ -1,0 +1,117 @@
+/* */
+.navbar {
+  position: fixed;
+  top: 20px; /* Floating effect */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1200px;
+  height: 70px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  border-radius: 15px;
+
+  /* Glassmorphism HUD Style */
+  background: rgba(10, 10, 25, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+}
+
+.navbar.scrolled {
+  background: rgba(3, 0, 20, 0.9);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 2rem;
+}
+
+.logo {
+  font-family: var(--font-header);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  font-family: var(--font-header);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--accent-cyan);
+  text-shadow: 0 0 8px var(--accent-cyan);
+}
+
+/* Robotic Underline Effect */
+.nav-links a::before {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--accent-cyan);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 5px var(--accent-cyan);
+}
+
+.nav-links a:hover::before {
+  width: 100%;
+}
+
+.menu-toggle {
+  color: var(--accent-cyan);
+  display: none; /* Hidden on desktop */
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .navbar {
+    top: 0;
+    width: 100%;
+    border-radius: 0;
+    border-top: none;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: rgba(3, 0, 20, 0.95);
+    flex-direction: column;
+    padding: 2rem;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition: clip-path 0.4s ease-in-out;
+    border-bottom: 1px solid var(--accent-cyan);
+  }
+
+  .nav-links.active {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}

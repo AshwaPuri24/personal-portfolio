@@ -1,0 +1,66 @@
+/* */
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600&family=Orbitron:wght@400;500;700&display=swap");
+
+:root {
+  /* Deep Space Palette */
+  --bg-deep: #030014; /* The Void */
+  --bg-card: rgba(23, 26, 43, 0.7); /* Glassy card background */
+  --accent-cyan: #00f3ff; /* Holographic Cyan */
+  --accent-purple: #bc13fe; /* Nebula Purple */
+  --text-primary: #ffffff;
+  --text-secondary: #b4bdd6;
+
+  /* Fonts */
+  --font-header: "Orbitron", sans-serif;
+  --font-body: "Exo 2", sans-serif;
+
+  /* Effects */
+  --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+  --neon-glow: 0 0 10px rgba(0, 243, 255, 0.5);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+/* Typography Overrides */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-header);
+  letter-spacing: 1px;
+  color: var(--text-primary);
+}
+
+/* Scrollbar for Chrome/Edge */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-cyan);
+  border-radius: 4px;
+  box-shadow: var(--neon-glow);
+}
+
+/* Utility for Glassmorphism */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: var(--glass-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
